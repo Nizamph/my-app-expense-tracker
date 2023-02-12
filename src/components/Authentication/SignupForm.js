@@ -1,11 +1,12 @@
 import React from 'react'
 import styles from './Signup.module.css'
-import { useRef } from 'react'
+import { useRef,useState } from 'react'
 const SignupForm = () => {
   const emailInputRef = useRef()
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
-  
+ 
+  const[isLoading,setIsLoading] = useState(false)
 
   const onSubmitHandler = (event) => {
     event.preventDefault()
@@ -13,6 +14,7 @@ const SignupForm = () => {
     const enteredPassword = passwordInputRef.current.value
     const enteredConfirmPassword = confirmPasswordInputRef.current.value
     if(enteredPassword === enteredConfirmPassword) {
+      setIsLoading(true)
       fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDvwujA3wobuKDwp_QaEd25aDq_k01ZHWY',
       {
         method:"POST",
@@ -29,12 +31,15 @@ const SignupForm = () => {
       }
       )
       .then((res) => {
+        setIsLoading(false)
         if(res.ok) {
           return res.json()
         } else {
           return res.json().then((data) => {
+            console.log(data)
             let errorMessage = 'Authentication failed'
             if(data && data.error && data.error.message) {
+              errorMessage = data.error.message
               throw new Error(errorMessage)
             }
           })
@@ -62,7 +67,8 @@ const SignupForm = () => {
           <input className={styles.input} type="email" placeholder='Email'  ref={emailInputRef} required/>
           <input className={styles.input} type="password" placeholder='Password' ref={passwordInputRef}  required/>
           <input className={styles.input}  type="password" placeholder='confirm Password' ref={confirmPasswordInputRef}  required/>
-          <button className={styles.signUpbtn}>Sign Up</button>
+         {!isLoading && <button className={styles.signUpbtn}>Sign Up</button>} 
+         {isLoading && <p style={{color:"white",textAlign:"center"}} >Loading...</p>}
         </form>
       </div>
       <button className={styles.AccountButton}>Have an account? Login</button>
