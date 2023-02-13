@@ -1,12 +1,15 @@
 import React from 'react'
-import styles from './Signup.module.css'
+import styles from './Auth.module.css'
 import { useRef,useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 const SignupForm = () => {
   const emailInputRef = useRef()
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
  
   const[isLoading,setIsLoading] = useState(false)
+  
+  const navigate = useNavigate()
 
   const onSubmitHandler = (event) => {
     event.preventDefault()
@@ -54,7 +57,9 @@ const SignupForm = () => {
     }
   }
 
-  
+  const loginPageHandler = () => {
+     navigate('/Login')
+  }
   
   
   return (      
@@ -71,7 +76,7 @@ const SignupForm = () => {
          {isLoading && <p style={{color:"white",textAlign:"center"}} >Loading...</p>}
         </form>
       </div>
-      <button className={styles.AccountButton}>Have an account? Login</button>
+      <button className={styles.AccountButton} onClick={loginPageHandler}>Have an account? Login</button>
     </div>
     </div>
     </React.Fragment>

@@ -56,9 +56,10 @@
   flex-direction: column;
   row-gap: 15px;
   padding: 10px;
+  justify-content: center;
 }
 
-.AccountButton,.signUpbtn {
+.AccountButton,.signUpbtn,.AccountToggler {
  padding: 12px 90px 12px 90px;
  margin-top: 10px;
  border: solid white;
@@ -84,6 +85,7 @@
    font-size: 25px;
    font-weight: 670;
    color: white;
+   margin-bottom: 4px;
 }
 
 .background{
@@ -98,4 +100,16 @@
   justify-content: center;
 }
 
+a{
+  text-align: center;
+  color: white;
+  cursor: pointer;
+}
 
+a:hover {
+  text-decoration: underline;
+}
+
+.AccountToggler {
+  padding: 12px 69px 12px 69px;
+}
