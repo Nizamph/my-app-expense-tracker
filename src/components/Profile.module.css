@@ -67,8 +67,14 @@
   border: none;
   border-radius: 5px;
   font-family:Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  ;
 }
 
+.updateBtn:hover {
+  background-color: rgb(180, 111, 111);
+}
 .updateBtnContainer {
   display: flex;
   flex-direction: column;
