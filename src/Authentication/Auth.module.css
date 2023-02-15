@@ -60,7 +60,7 @@
 }
 
 .AccountButton,.signUpbtn,.AccountToggler {
- padding: 12px 90px 12px 90px;
+ padding: 12px 82px 12px 82px;
  margin-top: 10px;
  border: solid white;
  border-radius: 6px;
@@ -111,5 +111,5 @@ a:hover {
 }
 
 .AccountToggler {
-  padding: 12px 69px 12px 69px;
+  padding: 12px 60px 12px 60px;
 }

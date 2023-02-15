@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Auth.module.css'
 import { useRef,useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 const SignupForm = () => {
   const emailInputRef = useRef()
   const passwordInputRef = useRef();
@@ -49,6 +49,7 @@ const SignupForm = () => {
         }
       }).then((data) => {
         console.log(data)
+        navigate('/Login')
       }).catch((err) => {
         alert(err.message)
       })
@@ -57,9 +58,6 @@ const SignupForm = () => {
     }
   }
 
-  const loginPageHandler = () => {
-     navigate('/Login')
-  }
   
   
   return (      
@@ -76,7 +74,7 @@ const SignupForm = () => {
          {isLoading && <p style={{color:"white",textAlign:"center"}} >Loading...</p>}
         </form>
       </div>
-      <button className={styles.AccountButton} onClick={loginPageHandler}>Have an account? Login</button>
+      <button className={styles.AccountButton}><Link to="/Login" style={{textDecoration:"none",color:"white"}}>Have an account? Login</Link></button>
     </div>
     </div>
     </React.Fragment>

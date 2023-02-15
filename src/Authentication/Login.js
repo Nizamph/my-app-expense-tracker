@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Auth.module.css';
 import { useState,useRef,useContext } from 'react';
 import AuthContext from '../Context/AuthContext';
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 const Login = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
@@ -49,7 +49,9 @@ const Login = () => {
     }catch(err) {
       alert(err.message)
     } 
-  }             
+  } 
+  
+ 
   return (
     <React.Fragment>
     <div className={styles.background}>
@@ -61,10 +63,10 @@ const Login = () => {
           <input className={styles.input} type="password" placeholder='Password' ref={passwordInputRef} required/>
          {!isLoading && <button className={styles.signUpbtn}>Log in</button>} 
          {isLoading && <p style={{color:"white",textAlign:"center"}} >Loading...</p>}
-           <a>Forgot password</a>
+           <a style={{color:"white"}}>Forgot password</a>
         </form>
       </div>
-      <button className={styles.AccountToggler}>Dont have an account? Sign up</button>
+      <button className={styles.AccountToggler}><Link to="/" style={{textDecoration:"none",color:"white"}}>Dont have an account? Sign up</Link></button>
     </div>
     </div>
     </React.Fragment>
