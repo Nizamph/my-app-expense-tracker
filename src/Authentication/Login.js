@@ -63,7 +63,7 @@ const Login = () => {
           <input className={styles.input} type="password" placeholder='Password' ref={passwordInputRef} required/>
          {!isLoading && <button className={styles.signUpbtn}>Log in</button>} 
          {isLoading && <p style={{color:"white",textAlign:"center"}} >Loading...</p>}
-           <a style={{color:"white"}}>Forgot password</a>
+           <Link to="/ForgetPassword" style={{color:"white"}} >Forgot password</Link>
         </form>
       </div>
       <button className={styles.AccountToggler}><Link to="/" style={{textDecoration:"none",color:"white"}}>Dont have an account? Sign up</Link></button>

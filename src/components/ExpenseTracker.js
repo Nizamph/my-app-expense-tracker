@@ -3,7 +3,7 @@ import styles from './ExpenseTracker.module.css'
 import { Link, Navigate } from 'react-router-dom'
 import AuthContext from '../Context/AuthContext'
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import ErrorModal from './UI/ErrorModal';
 import { useNavigate } from 'react-router-dom';
 const ExpenseTracker = () => {
   const AuthCtx = useContext(AuthContext)
@@ -73,17 +73,11 @@ const ExpenseTracker = () => {
      {isLoading && <h4 style={{color:"rgb(113, 34, 34)",marginLeft:"100px"}}>verifying.....</h4>}
      {isVerified && <h4 style={{color:"rgb(113, 34, 34)",marginLeft:"50px"}}>verified successfully</h4>}
       </div>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Something went wrong....</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{error}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+     <ErrorModal
+     onShow={show}
+     onClose={handleClose}
+     error={error}
+     />
     </section>
     </React.Fragment>
   )

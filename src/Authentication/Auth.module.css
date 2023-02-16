@@ -54,9 +54,10 @@
 .form {
   display: flex;
   flex-direction: column;
-  row-gap: 15px;
+  row-gap: 11px;
   padding: 10px;
   justify-content: center;
+  margin-top: 8px;
 }
 
 .AccountButton,.signUpbtn,.AccountToggler {
@@ -112,4 +113,13 @@ a:hover {
 
 .AccountToggler {
   padding: 12px 60px 12px 60px;
+}
+
+.forgetDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
 }
