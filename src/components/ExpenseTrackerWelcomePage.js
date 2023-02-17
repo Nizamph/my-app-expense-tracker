@@ -5,7 +5,7 @@ import AuthContext from '../Context/AuthContext'
 import Button from 'react-bootstrap/Button';
 import ErrorModal from './UI/ErrorModal';
 import { useNavigate } from 'react-router-dom';
-const ExpenseTracker = () => {
+const ExpenseTrackerWelcome = () => {
   const AuthCtx = useContext(AuthContext)
   const token = AuthCtx.token
   const [show, setShow] = useState(false);
@@ -37,6 +37,7 @@ const ExpenseTracker = () => {
       const data = await response.json()
       console.log(data)
       setIsVerified(true)
+      navigate("/ExpenseForm")
     }else {
       let errorMessage = 'Verification failed';
       const data = await response.json()
@@ -83,4 +84,4 @@ const ExpenseTracker = () => {
   )
 }
 
-export default ExpenseTracker;
+export default ExpenseTrackerWelcome;

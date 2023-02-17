@@ -35,7 +35,7 @@ const Login = () => {
         const data = await response.json()
         console.log(data)
         AuthCtx.login(data.idToken)
-        navigate('/ExpenseTracker')
+        navigate('/ExpenseTrackerWelcome')
       }else {
         let errorMessage = 'Authentication failed';
         const data  = await response.json()
