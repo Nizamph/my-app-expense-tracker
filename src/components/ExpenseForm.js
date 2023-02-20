@@ -3,14 +3,13 @@ import styles from './Expense.module.css'
 import ExpenseList from './ExpenseList'
 import { useRef } from 'react'
 import axios from 'axios'
-import { json } from 'react-router-dom'
 const ExpenseForm = () => {
-  const expenseInputRef = useRef();
-  const desciptionInputRef = useRef();
-  const categoryInputRef = useRef();
+ let expenseInputRef = useRef();
+ let desciptionInputRef = useRef();
+ let categoryInputRef = useRef();
   
   const[expense,setExpense] = useState([])
-  
+   let expenseId = Math.random().toString()
   const expenseSubmitHandler = (event) => {
     event.preventDefault()
     const enteredExpense = expenseInputRef.current.value;
@@ -20,28 +19,51 @@ const ExpenseForm = () => {
       amount:enteredExpense,
       description:enteredDescription,
       category:selectedCategory,
-      id:Math.random().toString()
+      localId:expenseId
     }
+
+   expenseInputRef.current.value = '';
+   desciptionInputRef.current.value = '';
+   categoryInputRef.current.value = '';
+   
+
+   
     axios.post("https://expense-tracker-c0524-default-rtdb.firebaseio.com/expenses.json",postData)
     .then((res) => {
-      console.log(res)
+      let newId = res.data.name
+      console.log(newId)
       setExpense((prevState) => {
-        return [...prevState,{amount:enteredExpense,description:enteredDescription,category:selectedCategory,id:Math.random().toString()}]
+        return [...prevState,{amount:enteredExpense,description:enteredDescription,category:selectedCategory,localId:expenseId,id:newId}]
       })
+
     }).catch((err) => {
       console.log(err)
     })
+  
   }
 
-  useEffect(() => {
-    axios.get("https://expense-tracker-c0524-default-rtdb.firebaseio.com/expenses.json")
+
+  useEffect(() => { axios.get("https://expense-tracker-c0524-default-rtdb.firebaseio.com/expenses.json")
     .then((res) => {
-      console.log(res.data)
-       setExpense(Object.values(res.data))
+      const data = res.data
+      console.log(data,'data is here')
+      const loadedExpenses = []
+      for(const key in data) {
+      loadedExpenses.push({
+        id:key,
+        amount:data[key].amount,
+        category:data[key].category,
+        description:data[key].description,
+        localId:data[key].localId
+      })
+      }
+      console.log(loadedExpenses)
+      setExpense(loadedExpenses)
     }).catch((err) => {
       console.log(err)
     }) 
   },[])
+
   return (
     <React.Fragment>
 <div className="container shadow p-4">
@@ -68,9 +90,9 @@ const ExpenseForm = () => {
     </div>
   </form>
 </div>
-    <ExpenseList expenseList={expense}/>
+    <ExpenseList expenseList={expense} onDelete={(item)=>setExpense(item)} onUpdate={(item) => setExpense(item)}/>
     </React.Fragment>
   )
 }
 
-export default ExpenseForm
+export default ExpenseForm;
