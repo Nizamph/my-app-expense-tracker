@@ -1,14 +1,17 @@
 import React from 'react';
 import styles from './Auth.module.css';
-import { useState,useRef,useContext } from 'react';
-import AuthContext from '../Context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom'
-const Login = () => {
+import { useState,useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../Store/auth-slice';
+
+const Login = (props) => {
+  const dispatch = useDispatch();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const[isLoading,setIsLoading] = useState(false)
   
-  const AuthCtx = useContext(AuthContext)
+  // const AuthCtx = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -33,9 +36,10 @@ const Login = () => {
       setIsLoading(false)
       if(response.ok) {
         const data = await response.json()
-        console.log(data)
-        AuthCtx.login(data.idToken)
-        navigate('/ExpenseTrackerWelcome')
+        console.log('data from login',data)
+        const loginObj = {idToken: data.idToken, email: data.email} 
+        dispatch(authActions.login(loginObj))
+        navigate('/Profile')
       }else {
         let errorMessage = 'Authentication failed';
         const data  = await response.json()

@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import styles from './Expense.module.css'
+import React, { useEffect } from 'react'
 import ExpenseList from './ExpenseList'
 import { useRef } from 'react'
 import axios from 'axios'
-const ExpenseForm = () => {
+import { expenseActions } from '../Store/Expense-slice'
+import { useDispatch } from 'react-redux'
+const ExpenseForm = (props) => {
+  const dispatch = useDispatch()
  let expenseInputRef = useRef();
  let desciptionInputRef = useRef();
  let categoryInputRef = useRef();
   
-  const[expense,setExpense] = useState([])
-   let expenseId = Math.random().toString()
+
   const expenseSubmitHandler = (event) => {
     event.preventDefault()
+    let expenseId = Math.random().toString()
     const enteredExpense = expenseInputRef.current.value;
     const enteredDescription = desciptionInputRef.current.value;
     const selectedCategory = categoryInputRef.current.value;
@@ -21,21 +23,25 @@ const ExpenseForm = () => {
       category:selectedCategory,
       localId:expenseId
     }
-
+    
    expenseInputRef.current.value = '';
    desciptionInputRef.current.value = '';
    categoryInputRef.current.value = '';
    
-
+   
    
     axios.post("https://expense-tracker-c0524-default-rtdb.firebaseio.com/expenses.json",postData)
     .then((res) => {
       let newId = res.data.name
       console.log(newId)
-      setExpense((prevState) => {
-        return [...prevState,{amount:enteredExpense,description:enteredDescription,category:selectedCategory,localId:expenseId,id:newId}]
-      })
-
+      dispatch(expenseActions.addExpense(
+        {id:newId,
+        amount:enteredExpense,
+        description:enteredDescription,
+        category:selectedCategory,
+        localId:expenseId}
+        ))
+    
     }).catch((err) => {
       console.log(err)
     })
@@ -47,7 +53,7 @@ const ExpenseForm = () => {
     .then((res) => {
       const data = res.data
       console.log(data,'data is here')
-      const loadedExpenses = []
+      let loadedExpenses = []
       for(const key in data) {
       loadedExpenses.push({
         id:key,
@@ -57,8 +63,8 @@ const ExpenseForm = () => {
         localId:data[key].localId
       })
       }
-      console.log(loadedExpenses)
-      setExpense(loadedExpenses)
+      console.log('data inside array',loadedExpenses)
+      dispatch(expenseActions.fetchexpenses(loadedExpenses))
     }).catch((err) => {
       console.log(err)
     }) 
@@ -66,7 +72,7 @@ const ExpenseForm = () => {
 
   return (
     <React.Fragment>
-<div className="container shadow p-4">
+<div className="container shadow p-4" style={{marginTop:"90px"}}>
   <form className="row g-3" onSubmit={expenseSubmitHandler}>
     <div className="col-md-4">
       <label  className="form-label">Expense</label>
@@ -86,11 +92,11 @@ const ExpenseForm = () => {
       </select>
     </div>
     <div className="col-12">
-      <button type="submit" className="btn btn-primary">Submit</button>
+      <button type="submit" className="btn btn-dark">Add expense</button>
     </div>
   </form>
 </div>
-    <ExpenseList expenseList={expense} onDelete={(item)=>setExpense(item)} onUpdate={(item) => setExpense(item)}/>
+    <ExpenseList />
     </React.Fragment>
   )
 }

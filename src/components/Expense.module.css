@@ -22,8 +22,9 @@
 
 .expenses {
   margin: 2rem auto;
-  width: 92%;
+  width: 85%;
   max-width: 100rem;
+  box-shadow: 2px 2px 18px rgb(165, 164, 164);
 }
 
 .expenses ul {
