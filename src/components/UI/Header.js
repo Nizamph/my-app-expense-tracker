@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -7,6 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
 import { authActions } from '../../Store/auth-slice';
 import { NavLink } from 'react-router-dom';
+import { actionsModal } from '../../Store/Modal-Slice';
+import PremiumModal from './PremiumModal';
+
+
 function Header() {
   // const AuthCtx = useContext(AuthContext)
   const dispatch = useDispatch()
@@ -18,24 +23,36 @@ function Header() {
 
   const idToken = useSelector(state => state.auth.idToken)
   
-  console.log('token from header',idToken)
+  // console.log('token from header',idToken)
   
- const totalExpense =  useSelector(state => state.expense.value)
+ const expenses =  useSelector(state => state.expense.value)
 
+ const showModal = useSelector(state => state.modal.onShow)
 
-
- console.log('this is total expense from header',totalExpense)
  let amount = 0;
- totalExpense?.forEach((item) => {
+ expenses?.forEach((item) => {
   amount = amount + item.amount
  })
 
- 
-
 
  
+ 
+ const onModalshowHandler = (e) => {
+    e.preventDefault()
+    // console.log('modal show')
+    dispatch(actionsModal.Show()) 
+ }
+
+ const ModalHideHandler = (event) => {
+  event.preventDefault()
+  dispatch(actionsModal.onClose())
+ }
+ 
+  // console.log('show modal',showModal)
+
 
   return (
+    <React.Fragment>
     <Navbar bg="dark" fixed='top' className='p-3 text-light' expand="lg">
       <Container fluid>
         <Navbar.Brand href="#" className=' text-light text-decoration-none'>Expense Tracker</Navbar.Brand>
@@ -51,7 +68,7 @@ function Header() {
             <NavLink to="/ExpenseForm" className='text-light text-decoration-none ms-4' activeClassName="active">My Expenses</NavLink>
           </Nav>
           <Form className="d-flex">
-          {amount >= Number(20000)?<Button variant='info'>Premium</Button>:null}
+          {amount >= Number(10000)?<Button variant='info' className='me-4' onClick={onModalshowHandler}>Premium</Button>:null}
           <Button variant="outline-light" onClick={logoutHandler}>logout</Button>
           </Form>
         </Navbar.Collapse>
@@ -64,6 +81,8 @@ function Header() {
         `}
       </style>
     </Navbar>
+    <PremiumModal onShow={showModal}  onClose={ModalHideHandler}/>
+    </React.Fragment>
   );
 }
 

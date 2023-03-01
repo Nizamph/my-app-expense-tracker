@@ -2,10 +2,11 @@ import React from 'react'
 import { Modal,Button } from 'react-bootstrap'
 const ErrorModal = (props) => {
   console.log('this is error modal')
+  console.log(props.show)
   return (
    <div>     
          <Modal show={props.onShow} className="bg-transparent " onHide={props.onClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton onClick={props.onClose}>
           <Modal.Title>Something went wrong....</Modal.Title>
         </Modal.Header>
         <Modal.Body>{props.error}</Modal.Body>

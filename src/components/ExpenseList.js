@@ -34,7 +34,7 @@ const ExpenseList = (props) => {
       setEditAmount(item.amount);
       setEditDescription(item.description);
       setEditCategory(item.category);
-      dispatch(expenseActions.isEdit({localId:item.localId}))
+      dispatch(expenseActions.editExpense({localId:item.localId}))
    }
 
 

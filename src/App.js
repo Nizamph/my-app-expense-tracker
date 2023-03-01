@@ -6,13 +6,18 @@ import ForgetPassword from "./Authentication/ForgetPassword";
 import ExpenseForm from "./components/ExpenseForm";
 import Header from "./components/UI/Header";
 import { useState } from "react";
+import classes from './App.module.css';
+import { useSelector } from "react-redux";
+
 function App() {
+
+  const theme = useSelector(state => state.theme.theme)
   const [email,setEmail] = useState('')
   const getEmail = (email) => {
     setEmail(email)
   }
   return (
-    <div>
+    <div className={classes[`${theme}`]}>
         <Header/>
         <Routes>
         <Route path="/"  element={<SignupForm/>}/>

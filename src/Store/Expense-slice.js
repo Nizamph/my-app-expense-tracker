@@ -5,7 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const expenseSlice = createSlice({
   name:"Expenses",
-  initialState: {value:[],isEdit:false, totalExpense:0},
+  initialState: {value:[], totalExpense:0},
   reducers:{
     fetchexpenses:(state, action) => {
       state.value = action.payload

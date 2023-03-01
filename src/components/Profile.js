@@ -126,7 +126,7 @@ const Profile = () => {
     <React.Fragment>
     
     <section className={styles.contactForm}>
-    <h2 style={{textAlign:"center"}}>Update Your Profile</h2>
+    <h2 style={{textAlign:"center",}}>Update Your Profile</h2>
       <div className={styles.contactContainer}>
       <h3>Contact Details</h3>
       <button className={styles.cancelBtn}>Cancel</button>
