@@ -5,14 +5,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const expenseSlice = createSlice({
   name:"Expenses",
-  initialState: {value:[], totalExpense:0},
+  initialState: {value:[],totalAmount:0},
   reducers:{
     fetchexpenses:(state, action) => {
       state.value = action.payload
     },
     addExpense:(state, action) =>{
       state.value = [...state.value,action.payload]
-      console.log('from redux',state.value)
     },
     deleteExpense:(state, action) => {
      state.value = state.value.filter((item) => item.localId !== action.payload.localId)
@@ -26,8 +25,13 @@ const expenseSlice = createSlice({
           item.category = action.payload.category 
         )
       })
-      state.isEdit = false
-    }, 
+    },
+    totalExpense:(state) => {
+      state.value.map((item) => {
+        state.totalAmount = state.totalAmount + item.amount
+      })
+    }
+  
     }  
 })
 

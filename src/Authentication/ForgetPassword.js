@@ -78,7 +78,8 @@ const ForgetPassword = () => {
     />
     </React.Fragment>
   )
-}
+} 
+
 
 
 export default ForgetPassword;

@@ -3,14 +3,14 @@ import ExpenseList from './ExpenseList'
 import { useRef } from 'react'
 import axios from 'axios'
 import { expenseActions } from '../Store/Expense-slice'
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 const ExpenseForm = (props) => {
   const dispatch = useDispatch()
  let expenseInputRef = useRef();
  let desciptionInputRef = useRef();
  let categoryInputRef = useRef();
-  
-
+ const email = useSelector(state => state.auth.email)
+ let cleanEmail = email.replace(/[^a-zA-Z0-9]/g,'')
   const expenseSubmitHandler = (event) => {
     event.preventDefault()
     let expenseId = Math.random().toString()
@@ -27,10 +27,11 @@ const ExpenseForm = (props) => {
    expenseInputRef.current.value = '';
    desciptionInputRef.current.value = '';
    categoryInputRef.current.value = '';
+    
+  
    
    
-   
-    axios.post("https://expense-tracker-c0524-default-rtdb.firebaseio.com/expenses.json",postData)
+    axios.post(`https://expense-tracker-c0524-default-rtdb.firebaseio.com/${cleanEmail}/expense.json`,postData)
     .then((res) => {
       let newId = res.data.name
       console.log(newId)
@@ -47,9 +48,10 @@ const ExpenseForm = (props) => {
     })
   
   }
+ 
+  
 
-
-  useEffect(() => { axios.get("https://expense-tracker-c0524-default-rtdb.firebaseio.com/expenses.json")
+  useEffect(() => { axios.get(`https://expense-tracker-c0524-default-rtdb.firebaseio.com/${cleanEmail}/expense.json`)
     .then((res) => {
       const data = res.data
       console.log(data,'data is here')

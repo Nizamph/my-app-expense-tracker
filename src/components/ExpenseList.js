@@ -10,18 +10,22 @@ const ExpenseList = (props) => {
    const [editAmount, setEditAmount] = useState("");
    const [editDescription, setEditDescription] = useState("");
    const [editCategory, setEditCategory] = useState("");
+   const [totalAmount, setTotalAmount] = useState(0)
+   const email = useSelector(state => state.auth.email)
   console.log(editAmount)
   const expenseData = useSelector(state => state.expense.value)
 
-   const isEdit = useSelector(state => state.expense.isEdit)
+//   const totalAmount = useSelector(state => state.expense.totalAmount)
+
+//   console.log(totalAmount)
 
   console.log('from expense data ',expenseData)
   const dispatch = useDispatch()
-
+  let cleanEmail = email.replace(/[^a-zA-Z0-9]/g,'')
    const deleteHandler = (item) => {
       console.log('deleting id',item.localId)
       dispatch(expenseActions.deleteExpense({localId:item.localId}))
-      axios.delete(`https://expense-tracker-c0524-default-rtdb.firebaseio.com/expenses/${item.id}.json`).then((res) => {
+      axios.delete(`https://expense-tracker-c0524-default-rtdb.firebaseio.com/${cleanEmail}/expense/${item.id}.json`).then((res) => {
          console.log('from delete',res)
       }).catch((err) => {
          console.log(err)
@@ -34,13 +38,12 @@ const ExpenseList = (props) => {
       setEditAmount(item.amount);
       setEditDescription(item.description);
       setEditCategory(item.category);
-      dispatch(expenseActions.editExpense({localId:item.localId}))
    }
-
+   
+   console.log('edited amount is here',editAmount)
 
 
    const updateHandler = (item) => {
-      
       const updatedItem = {
          ...item,
          amount: editAmount,
@@ -52,17 +55,27 @@ const ExpenseList = (props) => {
       // updatedExpenseArray.push(updatedItem)
       // props.onUpdate(updatedExpenseArray);
        setEditItemId(null)
-      axios.put(`https://expense-tracker-c0524-default-rtdb.firebaseio.com/expenses/${item.id}.json`, updatedItem)
+      axios.put(`https://expense-tracker-c0524-default-rtdb.firebaseio.com/${cleanEmail}/expense/${item.id}.json`, updatedItem)
          .then((res) => {
             console.log(res)
          }).catch((err) => {
             console.log(err)
          })
    }
-   let amount = 0
-   expenseData?.forEach((element) => {
-      amount += Number(element.amount)
-   })
+   useEffect(() => {
+      let amount = 0
+      expenseData?.forEach((element) => {
+         amount += Number(element.amount)
+         
+      })
+      console.log(amount)
+      setTotalAmount(amount)
+   },[expenseData])
+  
+
+
+
+   // console.log('amount frm expense list',amount)
 
    return (
       <Card className={styles.expenses}>
@@ -99,7 +112,7 @@ const ExpenseList = (props) => {
                </li>  
             ))}
          </ul>
-         <h3 style={{textAlign:"center"}}>Total: Rs.{amount}</h3>
+         <h3 style={{textAlign:"center"}}>Total: Rs.{totalAmount}</h3>
     </Card>
     
   )

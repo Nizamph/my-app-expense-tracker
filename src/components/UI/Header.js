@@ -20,8 +20,8 @@ function Header() {
     dispatch(authActions.logout())
     navigate("/login",{replace:true})
   }
-
-  const idToken = useSelector(state => state.auth.idToken)
+   const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+  // const idToken = useSelector(state => state.auth.idToken)
   
   // console.log('token from header',idToken)
   
@@ -31,10 +31,13 @@ function Header() {
 
  let amount = 0;
  expenses?.forEach((item) => {
-  amount = amount + item.amount
+  amount += Number(item.amount)
  })
 
 
+
+ console.log('expenses from',expenses)
+console.log(' amount from header',amount)
  
  
  const onModalshowHandler = (e) => {
@@ -63,13 +66,14 @@ function Header() {
             style={{ maxHeight: '100px',textDecoration:"none"}}
             navbarScroll
           >
-            <NavLink href="#action1" className='text-light text-decoration-none ms-4' activeClassName="active">Home</NavLink>
-            <NavLink to="/Profile" className='text-light text-decoration-none ms-4' activeClassName="active">My Profile</NavLink>
-            <NavLink to="/ExpenseForm" className='text-light text-decoration-none ms-4' activeClassName="active">My Expenses</NavLink>
+            <NavLink to="/Home" className='text-light text-decoration-none ms-4' activeClassName="active">Home</NavLink>
+            {!isLoggedIn && <NavLink to="/Login" className='text-light text-decoration-none ms-4' activeClassName="active">Login</NavLink>}
+            {isLoggedIn && <NavLink to="/Profile" className='text-light text-decoration-none ms-4' activeClassName="active">My Profile</NavLink>}
+            {isLoggedIn  && <NavLink to="/ExpenseForm" className='text-light text-decoration-none ms-4' activeClassName="active">My Expenses</NavLink>}
           </Nav>
           <Form className="d-flex">
-          {amount >= Number(10000)?<Button variant='info' className='me-4' onClick={onModalshowHandler}>Premium</Button>:null}
-          <Button variant="outline-light" onClick={logoutHandler}>logout</Button>
+          {isLoggedIn && amount >= Number(10000)?<Button variant='info' className='me-4' onClick={onModalshowHandler}>Premium</Button>:null}
+         {isLoggedIn && <Button variant="outline-light" onClick={logoutHandler}>logout</Button>}
           </Form>
         </Navbar.Collapse>
       </Container>
