@@ -25,7 +25,7 @@ function App() {
    setTimeout(() => {
     dispatch(authActions.logout())
     navigate("/Login")
-   },300000)
+   },3000000)
  
   return (
     <div className={classes[`${theme}`]}>
@@ -37,7 +37,6 @@ function App() {
        {isLoggedIn && <Route path="/Profile" element={<Profile/>}/>} 
         <Route path="/ForgetPassword" element={<ForgetPassword/>}/>
         {isLoggedIn && <Route path="/ExpenseForm" element={<ExpenseForm />}/>}
-        
         </Routes>
     </div>
   );

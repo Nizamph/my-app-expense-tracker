@@ -82,7 +82,7 @@ const ExpenseList = (props) => {
          <Card.Title className='m-auto pt-3 border-bottom  pb-3'>Expense Details</Card.Title>
          <ul>
             {expenseData.map(item => (
-               <li key={item.id}>
+               <li key={item.localId}>
                   <div className={styles.expenseItem}>
                      <div className={styles.div}><b>Expense:&nbsp;&nbsp;</b>
                         {editItemId === item.localId ?
