@@ -23,7 +23,7 @@ function App() {
   // }
   setTimeout(() => {
     dispatch(authActions.logout());
-    navigate('/Login');
+    navigate('/');
   }, 3000000);
 
   console.log('show theme from app', showTheme);
