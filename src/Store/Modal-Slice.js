@@ -1,18 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { act } from 'react-dom/test-utils';
 const modalSlice = createSlice({
-  name:"modal",
-  initialState:{onShow:false},
-  reducers:{
-    Show:(state) => {
-      console.log('show from redux')
-     state.onShow = true
+  name: 'modal',
+  initialState: { onShow: false, message: '' },
+  reducers: {
+    Show: (state) => {
+      state.onShow = true;
     },
-    onClose:(state) => {
-     state.onShow = false
+    onClose: (state) => {
+      state.onShow = false;
     },
-  }
-})
+    errorMessage: (state, action) => {
+      state.message = action.payload.message;
+    },
+  },
+});
 
-export const actionsModal = modalSlice.actions
+export const actionsModal = modalSlice.actions;
 
-export default modalSlice.reducer
+export default modalSlice.reducer;

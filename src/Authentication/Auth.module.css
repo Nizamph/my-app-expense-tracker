@@ -1,10 +1,10 @@
 .signUpContainer {
- display: flex;
- flex-direction: column;
-margin-top: 100px;
- justify-content: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin-top: 100px;
+  justify-content: center;
 }
-
 
 .signUpBorder {
   display: flex;
@@ -15,8 +15,6 @@ margin-top: 100px;
   border-radius: 3px;
 }
 
-
-
 .input {
   width: 250px;
   padding: 10px;
@@ -24,15 +22,12 @@ margin-top: 100px;
   border: solid thin rgb(210, 206, 206);
   background-color: transparent;
   position: relative;
-  color:white
+  color: white;
 }
-
-
 
 .input:focus {
   outline: none;
 }
-
 
 .input::-webkit-input-placeholder {
   color: rgb(210, 206, 206);
@@ -60,15 +55,17 @@ margin-top: 100px;
   margin-top: 8px;
 }
 
-.AccountButton,.signUpbtn,.AccountToggler {
- padding: 12px 82px 12px 82px;
- margin-top: 10px;
- border: solid white;
- border-radius: 6px;
- font-size: 14px;
- color: white;
- background-color: rgba(255, 255, 255, 0.116);
- cursor: pointer;
+.AccountButton,
+.signUpbtn,
+.AccountToggler {
+  padding: 12px 82px 12px 82px;
+  margin-top: 10px;
+  border: solid white;
+  border-radius: 6px;
+  font-size: 14px;
+  color: white;
+  background-color: rgba(255, 255, 255, 0.116);
+  cursor: pointer;
 }
 
 .signUpbtn {
@@ -83,28 +80,38 @@ margin-top: 100px;
   border: solid 2px;
 }
 .signUp {
-   font-size: 25px;
-   font-weight: 670;
-   color: white;
-   margin-bottom: 4px;
+  font-size: 25px;
+  font-weight: 670;
+  color: white;
+  margin-bottom: 4px;
 }
 
-.background{
-  background-image: url(D:\my-app-expense-tracker\public\login.jpg);
+.background {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: hidden;
 }
 
-a{
+a {
   text-align: center;
   color: white;
   cursor: pointer;
+}
+
+.bgImage {
+  width: 100%;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 a:hover {
@@ -122,4 +129,18 @@ a:hover {
   justify-content: center;
   color: white;
   font-size: 11px;
+}
+
+@media (max-width: 1200px) {
+  img {
+    height: 130vh;
+    object-fit: cover;
+  }
+  /* .background {
+    background-color: transparent;
+    margin: auto;
+    padding-top: 13rem;
+    position: absolute;
+    top: 10px;
+  } */
 }

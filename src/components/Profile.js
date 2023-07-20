@@ -2,14 +2,18 @@ import React, { useState,useEffect } from 'react'
 import styles from './Profile.module.css'
 // import AuthContext from '../Context/AuthContext'
 import ErrorModal from './UI/ErrorModal'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
+import { actionsModal } from '../Store/Modal-Slice'
 const Profile = () => {
   const userToken = useSelector(state => state.auth.idToken)
   const userEmail = useSelector(state => state.auth.email)
+  const showModal = useSelector(state => state.modal.onShow)
+  const errorMessage = useSelector(state => state.modal.message)
   // const AuthCtx = useContext(AuthContext)
   const [updatename,setUpdateName] = useState('')
   const [updatePhotoUrl,setUpdatePhotoUrl] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
   const updateDetailsHandler = (event) => {
       event.preventDefault()
 
@@ -78,13 +82,13 @@ const Profile = () => {
     setUpdatePhotoUrl(event.target.value)
   }
   
-  const [show, setShow] = useState(false);
-  const [error, setError] = useState('');
+
+ 
   const [isVeriLoading,setVeriLoading] = useState(false);
   const[isVerified,setIsVerified] = useState(false)
 
   
-  const handleClose = () => setShow(false);
+  const handleClose = () => dispatch(actionsModal.onClose());
  
   // const token = AuthCtx.token
   const verifyEmailHandler = async(event) => {
@@ -116,8 +120,8 @@ const Profile = () => {
     }
    
     }catch(err) {
-      setShow(true)
-      setError(err.message) 
+      dispatch(actionsModal.Show())
+      dispatch(actionsModal.errorMessage({message:err.message}))
     }
 
   }
@@ -152,9 +156,9 @@ const Profile = () => {
      {isVerified && <h4 style={{color:"rgb(113, 34, 34)",marginLeft:"50px"}}>verified successfully</h4>}
       </div>
      <ErrorModal
-     onShow={show}
+     onShow={showModal}
      onClose={handleClose}
-     error={error}
+     error={errorMessage}
      /> 
     </React.Fragment>
   )
